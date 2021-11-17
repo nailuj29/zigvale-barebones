@@ -1,4 +1,4 @@
-const TermWrite = fn([*]const u8, usize) callconv(.C) void;
+pub const TermWrite = fn([*]const u8, usize) callconv(.C) void;
 
 var term_write: ?TermWrite = null;
 
