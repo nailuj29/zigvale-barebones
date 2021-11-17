@@ -1,5 +1,6 @@
 const zigvale = @import("zigvale").v2;
 const tags = @import("./stivale/tags.zig").fb_tag;
+const terminal = @import("terminal");
 
 export var stack_bytes: [16 * 1024:0]u8 align(16) linksection(".bss") = undefined;
 const stack_bytes_slice = stack_bytes[0..];
@@ -28,7 +29,9 @@ pub fn kmain(zv: *const zigvale.Struct.Parsed) noreturn {
 
     const term_write = @intToPtr(fn([*]const u8, usize) callconv(.C) void, zv.terminal.?.term_write);
 
-    term_write("Hello World", 11);
+    terminal.init(term_write);
+    terminal.println("Welcome to your new OS!");
+    terminal.println("\x1b[31mC\x1b[33mo\x1b[32ml\x1b[34mo\x1b[35mr\x1b[31ms\x1b[0m");
 
     while (true) {
         asm volatile ("hlt");

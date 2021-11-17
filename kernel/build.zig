@@ -3,8 +3,10 @@ const pkgs = @import("deps.zig").pkgs;
 
 pub fn build(b: *std.build.Builder) void {
     const kernel = b.addExecutable("kernel.elf", "src/main.zig");
+
     pkgs.addAllTo(kernel);
-    kernel.install();
+    kernel.addPackagePath("terminal", "lib/terminal.zig");
+
     kernel.setOutputDir("build");
 
     kernel.setBuildMode(b.standardReleaseOptions());
@@ -31,5 +33,8 @@ pub fn build(b: *std.build.Builder) void {
     });
 
     kernel.setLinkerScriptPath(.{.path="./linker.ld"});
+
+    kernel.install();
+
     b.default_step.dependOn(&kernel.step);
 }
