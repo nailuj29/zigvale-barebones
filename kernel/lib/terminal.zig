@@ -1,9 +1,11 @@
-var term_write: ?fn([*]const u8, usize) callconv(.C) void = null;
+const TermWrite = fn([*]const u8, usize) callconv(.C) void;
+
+var term_write: ?TermWrite = null;
 
 /// Initializes the terminal writing. 
 ///
 /// After this function is called, the `print` function may be called
-pub fn init(fun: fn([*]const u8, usize) callconv(.C) void) void {
+pub fn init(fun: TermWrite) void {
     term_write = fun;
 }
 

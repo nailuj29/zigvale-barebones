@@ -27,7 +27,7 @@ pub fn kmain(zv: *const zigvale.Struct.Parsed) noreturn {
         }
     }
 
-    const term_write = @intToPtr(fn([*]const u8, usize) callconv(.C) void, zv.terminal.?.term_write);
+    const term_write = @intToPtr(TermWrite, zv.terminal.?.term_write);
 
     terminal.init(term_write);
     terminal.println("Welcome to your new OS!");
